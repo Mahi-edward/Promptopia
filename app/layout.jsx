@@ -2,8 +2,8 @@ import "@styles/global.css";
 import { Children } from "react";
 
 export const metadata = {
-  title: "Home",
-  description: "This is the homepage",
+  title: "Promtopia",
+  description: "Explore the process of creating",
 };
 
 const RootLayout = ({ children }) => {
