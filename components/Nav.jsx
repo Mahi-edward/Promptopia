@@ -5,15 +5,14 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, getProviders, useSession } from "next-auth/react";
 
 const Nav = () => {
-  const isUserLogin = true;
-
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     const ProvidersSetter = async () => {
       const response = await getProviders();
-      console.log(response, "prov");
+      console.log(response, "prov",session);
       setProviders(response);
     };
     ProvidersSetter();
@@ -34,7 +33,7 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLogin ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-propmt" className="black_btn">
               Create Post
@@ -45,7 +44,7 @@ const Nav = () => {
             </button>
 
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user?.image}
               alt="Profile"
               width={37}
               height={37}
@@ -73,7 +72,7 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLogin ? (
+        {session?.user ? (
           <div className="flex">
             <Image
               src="/assets/images/logo.svg"
@@ -92,6 +91,7 @@ const Nav = () => {
                   onClick={() => setToggleDropdown(false)}
                 >
                   My Profile
+                  {/* {JSON.stringify(session)} */}
                 </Link>
                 <Link
                   href="/profile"
